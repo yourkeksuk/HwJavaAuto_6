@@ -30,7 +30,7 @@ class PageObjects {
         var firstCardBalance = dashboardPage.checkBalance(firstCardInfo);
         var secondCardBalance = dashboardPage.checkBalance(secondCardInfo);
         var amount = generateValidAmount(firstCardBalance);
-        var transferPage = dashboardPage.selectCardToTransfer(secondCardInfo);
+        var transferPage = dashboardPage.selectCard(secondCardInfo);
         dashboardPage = transferPage.makeValidTransfer(amount, firstCardInfo);
         assertEquals(firstCardBalance - amount, dashboardPage.checkBalance(firstCardInfo));
         assertEquals(secondCardBalance + amount, dashboardPage.checkBalance(secondCardInfo));
@@ -48,8 +48,8 @@ class PageObjects {
         var firstCardBalance = dashboardPage.checkBalance(firstCardInfo);
         var secondCardBalance = dashboardPage.checkBalance(secondCardInfo);
         var amount = generateValidAmount(secondCardBalance);
-        var moneyTransferPage = dashboardPage.selectCardToTransfer(firstCardInfo);
-        dashboardPage = moneyTransferPage.makeValidTransfer(amount, secondCardInfo);
+        var transferPage = dashboardPage.selectCard(secondCardInfo);
+        dashboardPage = transferPage.makeValidTransfer(amount, firstCardInfo);
         assertEquals(secondCardBalance - amount, dashboardPage.checkBalance(secondCardInfo));
         assertEquals(firstCardBalance + amount, dashboardPage.checkBalance(firstCardInfo));
     }
@@ -66,9 +66,8 @@ class PageObjects {
         var firstCardBalance = dashboardPage.checkBalance(firstCardInfo);
         var secondCardBalance = dashboardPage.checkBalance(secondCardInfo);
         var amount = generateInvalidAmount(firstCardBalance);
-        var moneyTransferPage = dashboardPage.selectCardToTransfer(secondCardInfo);
-        dashboardPage = moneyTransferPage.makeValidTransfer(amount, firstCardInfo);
-        TransferPage.searchErrorMessage("Ошибка!");
+        var transferPage = dashboardPage.selectCard(secondCardInfo);
+        dashboardPage = transferPage.makeValidTransfer(amount, firstCardInfo);
         assertEquals(firstCardBalance - amount, dashboardPage.checkBalance(firstCardInfo));
         assertEquals(secondCardBalance + amount, dashboardPage.checkBalance(secondCardInfo));
     }
@@ -85,10 +84,8 @@ class PageObjects {
         var firstCardBalance = dashboardPage.checkBalance(firstCardInfo);
         var secondCardBalance = dashboardPage.checkBalance(secondCardInfo);
         var amount = generateInvalidAmount(secondCardBalance);
-        var moneyTransferPage = dashboardPage.selectCardToTransfer(firstCardInfo);
-        dashboardPage = moneyTransferPage.makeValidTransfer(amount, secondCardInfo);
-        TransferPage.searchErrorMessage(
-                "Ошибка!");
+        var transferPage = dashboardPage.selectCard(secondCardInfo);
+        dashboardPage = transferPage.makeValidTransfer(amount, firstCardInfo);
         assertEquals(secondCardBalance, dashboardPage.checkBalance(secondCardInfo));
         assertEquals(firstCardBalance, dashboardPage.checkBalance(firstCardInfo));
     }

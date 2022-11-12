@@ -25,7 +25,7 @@ public class DashboardPage {
         return extractBalance(text);
     }
 
-    public TransferPage selectCardToTransfer(DataHelper.CardInfo cardInfo) {
+    public TransferPage selectCard(DataHelper.CardInfo cardInfo) {
         cards.findBy(attribute("data-test-id", cardInfo.getTestId())).$("button").click();
         return new TransferPage();
     }
